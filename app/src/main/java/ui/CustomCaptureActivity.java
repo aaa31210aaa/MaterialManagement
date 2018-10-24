@@ -105,7 +105,7 @@ public class CustomCaptureActivity extends CaptureActivity {
         //有网的时候遍历本地数据库并提交当前这个任务的数据   通过经销商id 时间 去查询
         if (NetUtils.isConnected(this)) {
             barCodeList = new ArrayList<>();
-            //遍历存放本地数据库中的时间和码值
+            //通过经销商id和时间 遍历出存放本地数据库中的码值
             Cursor cursor = sqldb.rawQuery("select * from out_storage", null);
             while (cursor.moveToNext()) {
                 OutLibraryHistoryBean bean = new OutLibraryHistoryBean();
