@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="ui.AgentRetailerDetail">
+
+    <include layout="@layout/common_title"></include>
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="@dimen/qb_px_5"-->
+    <!--android:layout_marginTop="@dimen/qb_px_5"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:text="@string/bh" />-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/agent_retailer_etv_bh"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="2"-->
+    <!--android:background="@drawable/editext_bk"-->
+    <!--android:padding="@dimen/qb_px_5"-->
+    <!--android:hint=""-->
+    <!--android:text="" />-->
+    <!--</LinearLayout>-->
+
+    <LinearLayout
+        android:id="@+id/agent_retailer_yhm_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/qb_px_5"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/yhm" />
+
+        <EditText
+            android:id="@+id/agent_retailer_etv_yhm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/editext_bk"
+            android:padding="@dimen/qb_px_5"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/agent_retailer_mm_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/qb_px_5"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/mm" />
+
+        <EditText
+            android:id="@+id/agent_retailer_etv_mm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/editext_bk"
+            android:padding="@dimen/qb_px_5"
+            android:text="" />
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/qb_px_5"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/jxsmc" />
+
+        <EditText
+            android:id="@+id/agent_retailer_etv_mc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/editext_bk"
+            android:padding="@dimen/qb_px_5"
+            android:text="" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/qb_px_5"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lxr" />
+
+        <EditText
+            android:id="@+id/agent_retailer_etv_lxr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/editext_bk"
+            android:padding="@dimen/qb_px_5"
+            android:text="" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/qb_px_5"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lxdh" />
+
+        <EditText
+            android:id="@+id/agent_retailer_etv_lxdh"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/editext_bk"
+            android:padding="@dimen/qb_px_5"
+            android:text="" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/agent_retailer_lx_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/qb_px_5"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lx" />
+
+        <TextView
+            android:id="@+id/agent_retailer_etv_lx"
+            style="@style/HiddenSpinner" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/retailer_detail_sjjxs_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/qb_px_5"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:visibility="gone"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sjjxs" />
+
+        <EditText
+            android:id="@+id/agent_retailer_etv_sjjxs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/editext_bk"
+            android:padding="@dimen/qb_px_5"
+            android:text="" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/shengshixian"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/qb_px_5"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/agent_retailer_etv_sheng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/editext_bk"
+            android:padding="@dimen/qb_px_8"
+            android:text="" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/qb_px_5"
+            android:paddingRight="@dimen/qb_px_5"
+            android:text="@string/sheng" />
+
+        <TextView
+            android:id="@+id/agent_retailer_etv_shi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/editext_bk"
+            android:padding="@dimen/qb_px_8"
+            android:text="" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/qb_px_5"
+            android:paddingRight="@dimen/qb_px_5"
+            android:text="@string/shi" />
+
+
+        <TextView
+            android:id="@+id/agent_retailer_etv_xian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/editext_bk"
+            android:padding="@dimen/qb_px_8"
+            android:text="" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/qb_px_5"
+            android:paddingRight="@dimen/qb_px_5"
+            android:text="@string/xian" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/qb_px_5"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/xxdz" />
+
+        <EditText
+            android:id="@+id/agent_retailer_etv_xxdz"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/editext_bk"
+            android:padding="@dimen/qb_px_5"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/qb_px_5"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/bz" />
+
+        <EditText
+            android:id="@+id/agent_retailer_etv_bz"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/editext_bk"
+            android:gravity="left|top"
+            android:minHeight="@dimen/qb_px_80"
+            android:padding="@dimen/qb_px_5"
+            android:text="" />
+    </LinearLayout>
+
+</LinearLayout>

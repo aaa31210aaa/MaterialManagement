@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1195db</color>
+    <color name="colorPrimaryDark">#116cdb</color>
+    <color name="colorAccent">#1195db</color>
+    <color name="dialog_color">#ff4081</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="gray_deep">#888888</color>
+    <color name="login_btn_enable">#b54c4a</color>
+    <color name="login_btn_cantenable">#bebebe</color>
+    <color name="login_btn_disenable">#ba7777</color>
+    <color name="transparent">#00000000</color>
+    <color name="tabtv_unselect">#bfbfbf</color>
+    <color name="tabtv_select">#2540b8</color>
+    <color name="btn_select">#3951ff</color>
+    <color name="main_color">#1195db</color>
+    <color name="gray_bg">#e7e7e7</color>
+    <color name="refresh_bg">#6fcdff</color>
+    <color name="indicator_text_color">#f57c00</color>
+    <color name="orange_normal">#ff9100</color>
+    <color name="orange_pressed">#ffc67a</color>
+    <color name="gray_normal">#787878</color>
+    <color name="gray_pressed">#b1b1b1</color>
+    <color name="red">#ff0000</color>
+    <color name="red_normal">#FF0000</color>
+    <color name="red_pressed">#FF6666</color>
+    <color name="workbench_dh2">#d3e157</color>
+    <color name="workbench_dh4">#4cf2bb</color>
+</resources>

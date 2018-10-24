@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingTop="56dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/qb_px_50"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/loginlog" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="利诚种业物流追踪管理系统"
+            android:textColor="@color/white"
+            android:textSize="19sp" />
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/edit_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/qb_px_10"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:hint="@string/login_account_hint_text"
+        android:textColorHint="@color/white"
+        android:textColor="@android:color/white" />
+
+
+    <EditText
+        android:id="@+id/edit_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/qb_px_10"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:hint="@string/login_pwd_hint_text"
+        android:inputType="textPassword"
+        android:textColorHint="@color/white"
+        android:textColor="@android:color/white" />
+
+    <LinearLayout
+        android:id="@+id/acc_pwd_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pwdEtv"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:gravity="center">
+
+        <CheckBox
+            android:id="@+id/saveAccountCb"
+            style="@style/CustomCheckBoxTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:text="记住账号"
+            android:textColor="@color/white" />
+
+        <CheckBox
+            android:id="@+id/savePwdCb"
+            style="@style/CustomCheckBoxTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="记住密码"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/qb_px_20"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="@dimen/qb_px_10"
+        android:padding="@dimen/qb_px_10"
+        android:text="@string/login_btn_login"
+        android:textColor="@android:color/white" />
+
+
+    <TextView
+        android:id="@+id/forget_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="忘记密码"
+        android:visibility="gone"
+        android:padding="@dimen/qb_px_10"
+        android:textColor="@color/white"/>
+</LinearLayout>

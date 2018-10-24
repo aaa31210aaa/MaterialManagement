@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ui.ModifyPwd">
+
+    <include layout="@layout/common_title"></include>
+
+    <TextView
+        android:id="@+id/tvold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbarlayout"
+        android:layout_margin="@dimen/qb_px_10"
+        android:text="旧密码" />
+
+
+    <EditText
+        android:id="@+id/etv_oldpwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvold"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:background="@drawable/editext_yb"
+        android:inputType="text"
+        android:padding="@dimen/qb_px_5"
+        android:text="" />
+
+
+    <TextView
+        android:id="@+id/tvnew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etv_oldpwd"
+        android:layout_margin="@dimen/qb_px_10"
+        android:text="新密码" />
+
+    <EditText
+        android:id="@+id/etv_newpwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvnew"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:background="@drawable/editext_yb"
+        android:inputType="textPassword"
+        android:lines="1"
+        android:padding="@dimen/qb_px_5"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/tvnew_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etv_newpwd"
+        android:layout_margin="@dimen/qb_px_10"
+        android:text="再次确认" />
+
+
+    <EditText
+        android:id="@+id/etv_newpwd_again"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvnew_again"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:background="@drawable/editext_yb"
+        android:inputType="textPassword"
+        android:lines="1"
+        android:padding="@dimen/qb_px_5"
+        android:text="" />
+
+    <Button
+        android:id="@+id/modify_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etv_newpwd_again"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:background="@drawable/modify_password_style"
+        android:text="确定"
+        android:textColor="@color/white" />
+
+
+    <TextView
+        android:id="@+id/display_hidden_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/modify_submit"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:text="显示密码" />
+
+    <ImageButton
+        android:id="@+id/displaypwd_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/modify_submit"
+        android:layout_marginTop="@dimen/qb_px_15"
+        android:layout_toLeftOf="@+id/display_hidden_tv"
+        android:background="@drawable/pwdhidden_style"
+        android:button="@null" />
+</RelativeLayout>

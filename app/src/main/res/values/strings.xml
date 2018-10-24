@@ -1,0 +1,120 @@
+<resources>
+    <string name="app_name">物流追踪</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--MainActivity-->
+    <string name="click_agin">再按一次退出应用</string>
+    <string name="permission_title">权限设置</string>
+    <string name="permission_tips">没有该权限，此功能可能无法正常使用。打开应用设置以修改应用权限</string>
+
+
+    <!--workbench-->
+    <string name="gzt">工作台</string>
+    <string name="yjck">一级出库</string>
+    <string name="jxck">经销出库</string>
+    <string name="yjckls">一级出库历史</string>
+    <string name="jxckls">经销出库历史</string>
+    <string name="yjtk">一级退库</string>
+    <string name="jxtk">经销退库</string>
+    <string name="yjtkls">一级退库历史</string>
+    <string name="jxtkls">经销退库历史</string>
+    <string name="dls">代理商</string>
+    <string name="lss">零售商</string>
+    <string name="fccx">防窜查询</string>
+    <string name="lxck">离线出库</string>
+
+
+    <string name="connect_err">连接失败，请重试</string>
+    <string name="connect_cache">网络连接失败，加载缓存数据</string>
+
+    <!--login-->
+    <string name="login_account_hint_text">请输入帐号</string>
+    <string name="login_pwd_hint_text">请输入密码</string>
+    <string name="login_btn_login">登录</string>
+    <string name="account_pwd_no_empty">帐号或密码不能为空</string>
+    <string name="account_pwd_err">帐号或密码错误</string>
+    <string name="loading_write">请稍后...</string>
+    <string name="loading">加载中...</string>
+
+    <!--出 退 调剂 库历史-->
+    <string name="input_search">请输入关键字搜索</string>
+    <string name="ckrwlb">出库任务列表</string>
+    <string name="tkrwlb">退库任务列表</string>
+    <string name="tiaojirwlb">调剂任务列表</string>
+    <string name="ckjxslb">出库经销商列表</string>
+    <string name="tkjxslb">退库经销商列表</string>
+    <string name="rwbh">任务编号</string>
+    <string name="jxs">经销商</string>
+    <string name="cp">产品</string>
+    <string name="cplb">产品列表</string>
+    <string name="sjxs">实际件数</string>
+    <string name="ckrq">出库日期</string>
+    <string name="tkrq">退库日期</string>
+    <string name="jbr">经办人</string>
+    <string name="bz">备注</string>
+    <string name="tiaoji">调剂</string>
+    <string name="tiaojihistory">调剂历史</string>
+    <string name="tiaojirw">调剂任务</string>
+    <string name="tiaojidate">调剂日期</string>
+    <string name="tiaojijxslb">调剂经销商列表</string>
+
+    <!--出库  退库-->
+    <string name="ckrw">出库任务</string>
+    <string name="tkrw">退库任务</string>
+    <string name="xyb">下一步</string>
+    <string name="submit">完成</string>
+    <string name="permission_camera">App扫码需要用到拍摄权限</string>
+    <string name="permission_external_storage">App需要用到读写权限</string>
+    <string name="tips_scan_code">将二维码/条形码放入框内，即可自动扫码</string>
+    <string name="sm_num">扫码数：</string>
+
+    <!--代理商，零售商-->
+    <string name="bh">编号</string>
+    <string name="yhm">用户名</string>
+    <string name="mm">密码</string>
+    <string name="mc">名称</string>
+    <string name="jxsmc">经销商名称</string>
+    <string name="lxr">联系人</string>
+    <string name="lxdh">联系电话</string>
+    <string name="lx">类型</string>
+    <string name="sjjxs">上级经销商</string>
+    <string name="sheng">省</string>
+    <string name="shi">市</string>
+    <string name="xian">县</string>
+    <string name="xxdz">详细地址</string>
+    <string name="Prompt">提示</string>
+    <string name="DeleteTemporaryData">是否删除这条数据</string>
+
+    <!--防窜查询-->
+    <string name="xm">小码</string>
+    <string name="dm">大码</string>
+    <string name="smcx">扫码查询</string>
+    <string name="cpmc">产品名称</string>
+    <string name="cpbh">产品编号</string>
+    <string name="maxcode">大码</string>
+    <string name="scrq">生产日期</string>
+    <string name="cksj">出库时间</string>
+    <string name="khmc">经销商</string>
+    <string name="smxxcx">查询</string>
+    <string name="dyglgx">-----以下是对应关联关系-----</string>
+
+    <!--我的-->
+    <string name="mine_cancellation_dialog_title">注销</string>
+    <string name="mine_cancellation_dialog_content">请问是否要注销此账号</string>
+    <string name="mine_cancellation_dialog_btn1">取消</string>
+    <string name="mine_cancellation_dialog_btn2">确定</string>
+
+    <!--修改密码-->
+    <string name="oldpwdEmpty">请填写原始密码</string>
+    <string name="newpwdEmpty">请填写新密码</string>
+    <string name="samenewpwd">两次填写的新密码不一致</string>
+    <string name="oldpwd_err">原始密码不正确</string>
+    <string name="sameOldNew">新密码不能与原密码相同</string>
+    <string name="hiddenPwd">隐藏密码</string>
+    <string name="displayPwd">显示密码</string>
+    <string name="update_err">修改失败，请重试</string>
+
+    <!--关于-->
+    <string name="about_content">这是一款关于物流追踪的app,可以进行一些出库，退库的操作和查询</string>
+</resources>

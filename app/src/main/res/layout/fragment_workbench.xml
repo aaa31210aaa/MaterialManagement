@@ -1,0 +1,282 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="tabfragment.Workbench">
+
+    <include layout="@layout/common_title"></include>
+
+    <com.bigkoo.convenientbanner.ConvenientBanner
+        android:id="@+id/homeBanner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_130"
+        android:layout_below="@+id/title_name"
+        app:canLoop="true"></com.bigkoo.convenientbanner.ConvenientBanner>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/ckcx_ll"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@color/main_color"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ckcx" />
+
+            <TextView
+                android:id="@+id/ckls_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yjckls"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/preventflee_ll"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/fccx" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fccx"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/tkls_ll"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@color/workbench_dh4"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tkcx" />
+
+            <TextView
+                android:id="@+id/tkls_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yjtkls"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ck_ll"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@color/orange_pressed"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ck" />
+
+            <TextView
+                android:id="@+id/ck_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yjck"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dls_ll"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@color/red_pressed"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dls" />
+
+            <TextView
+                android:id="@+id/dls_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dls"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/tk_ll"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@color/gray_deep"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tk" />
+
+            <TextView
+                android:id="@+id/tk_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yjtk"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/tiaojihis_ll"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@color/dialog_color"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tiaojihistory" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tiaojihistory"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_weight="1"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lxck_ll"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@color/login_btn_disenable"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/offline" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lxck"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:layout_weight="1">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tiaoji_ll"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@color/login_btn_disenable"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tiaoji" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tiaoji"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

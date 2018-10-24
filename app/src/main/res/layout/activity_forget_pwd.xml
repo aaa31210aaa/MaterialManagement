@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="ui.ForgetPwd">
+
+    <include layout="@layout/common_title"></include>
+
+
+    <LinearLayout
+        android:id="@+id/dhhm_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbarlayout"
+        android:layout_margin="@dimen/qb_px_10"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/moblie_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号码：" />
+
+        <EditText
+            android:id="@+id/moblie_num_etv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/moblie_num_tv"
+            android:background="@drawable/editext_bk"
+            android:padding="@dimen/qb_px_10"
+            android:text="" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/send_message"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_40"
+        android:layout_below="@id/dhhm_ll"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:padding="@dimen/qb_px_10"
+        android:text=""
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/verification_code"
+        android:layout_width="@dimen/qb_px_150"
+        android:layout_height="@dimen/qb_px_40"
+        android:layout_below="@id/dhhm_ll"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:layout_toRightOf="@id/send_message"
+        android:background="@drawable/editext_bk"
+        android:gravity="center"
+        android:text=""
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/next_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/send_message"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:background="@drawable/modify_password_style"
+        android:text="下一步"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
