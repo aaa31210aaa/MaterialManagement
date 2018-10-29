@@ -18,6 +18,7 @@ package com.king.zxing;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -107,6 +108,8 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
         return beepManager;
     }
 
+    public AlertDialog alertDialog;
+
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -115,11 +118,13 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(getLayoutId());
 
+
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
         beepManager = new BeepManager(this);
         ambientLightManager = new AmbientLightManager(this);
-
+        beepManager.setPlayBeep(true);
+        beepManager.setVibrate(true);
 //        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
 
@@ -156,6 +161,8 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
         // want to open the camera driver and measure the screen size if we're going to show the help on
         // first launch. That led to bugs where the scanning rectangle was the wrong size and partially
         // off screen.
+
+
         cameraManager = new CameraManager(getApplication());
         viewfinderView = findViewById(getViewFinderViewId());
         viewfinderView.setCameraManager(cameraManager);
@@ -297,6 +304,10 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 
     @Override
     protected void onPause() {
+//        if (alertDialog != null && alertDialog.isShowing()) {
+//            alertDialog.dismiss();
+//        }
+
         if (handler != null) {
             handler.quitSynchronously();
             handler = null;
@@ -333,6 +344,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 //                    restartPreviewAfterDelay(0L);
 //                    return true;
 //                }
+
                 break;
             case KeyEvent.KEYCODE_FOCUS:
             case KeyEvent.KEYCODE_CAMERA:
@@ -432,7 +444,6 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
     }
 
 
-
     /**
      * A valid barcode has been found, so give an indication of success and show the results.
      *
@@ -440,22 +451,28 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
      * @param scaleFactor amount by which thumbnail was scaled
      * @param barcode     A greyscale bitmap of the camera data which was decoded.
      */
-    public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
+    public void handleDecode(final Result rawResult, Bitmap barcode, float scaleFactor) {
         inactivityTimer.onActivity();
         lastResult = rawResult;
         if (isBeepSoundAndVibrate()) {
             beepManager.playBeepSoundAndVibrate();
         }
 
-        String resultString = rawResult.getText();
-        Intent intent = new Intent();
-        intent.putExtra(KEY_RESULT,resultString);
-        setResult(RESULT_OK,intent);
-        finish();
-
-
-
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(100);
+                    String resultString = rawResult.getText();
+                    Intent intent = new Intent();
+                    intent.putExtra(KEY_RESULT, resultString);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
 
 //        ResultHandler resultHandler = ResultHandlerFactory.makeResultHandler(this, rawResult);

@@ -148,9 +148,36 @@
                 android:layout_marginLeft="@dimen/qb_px_20"
                 android:layout_toRightOf="@+id/about"
                 android:text="关于" />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/clear_cache"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/qb_px_1"
+            android:layout_weight="0.5"
+            android:background="@color/white"
+            android:padding="@dimen/qb_px_5">
+
+            <ImageView
+                android:id="@+id/clearcache"
+                android:layout_width="@dimen/qb_px_40"
+                android:layout_height="@dimen/qb_px_40"
+                android:layout_centerVertical="true"
+                android:background="@drawable/clear_cache" />
+
+            <ImageView style="@style/RightArrow" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/qb_px_20"
+                android:layout_toRightOf="@+id/clearcache"
+                android:text="清空缓存" />
 
         </RelativeLayout>
+
 
 
         <RelativeLayout

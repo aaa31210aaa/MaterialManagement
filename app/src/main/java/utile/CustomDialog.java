@@ -121,6 +121,8 @@ public class CustomDialog extends Dialog {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             // instantiate the dialog with the custom Theme
             final CustomDialog dialog = new CustomDialog(context, R.style.CustomDialog);
+
+
             View layout = inflater.inflate(R.layout.update_dialog, null);
             dialog.addContentView(layout, new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));

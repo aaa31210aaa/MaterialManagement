@@ -4,10 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
@@ -21,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ui.ForgetPwd;
+import utile.AppUtils;
 import utile.BaseActivity;
 import utile.DialogUtil;
 import utile.JsonCallback;
@@ -43,6 +50,10 @@ public class Login extends BaseActivity {
     CheckBox savePwdCb;
     @BindView(R.id.forget_pwd)
     TextView forget_pwd;
+    @BindView(R.id.login_username_clear)
+    ImageButton login_username_clear;
+    @BindView(R.id.login_pwd_hidden)
+    CheckBox login_pwd_hidden;
 
 
     @Override
@@ -55,6 +66,46 @@ public class Login extends BaseActivity {
 
     @Override
     protected void initData() {
+        AppUtils.PwdNoSpace(edit_username);
+        AppUtils.PwdNoSpace(edit_password);
+        edit_username.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (edit_username.getText().length() > 0) {
+                    login_username_clear.setVisibility(View.VISIBLE);
+                } else {
+                    login_username_clear.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        login_pwd_hidden.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+//                    edit_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    edit_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    edit_password.setSelection(edit_password.getText().toString().length());
+                } else {
+//                  edit_password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                    edit_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    edit_password.setSelection(edit_password.getText().toString().length());
+                }
+            }
+        });
+
+
         SaveAccount();
         SavePwd();
         codeMap = new HashMap<>();
@@ -261,9 +312,27 @@ public class Login extends BaseActivity {
      * 忘记密码
      */
     @OnClick(R.id.forget_pwd)
-    void ForgetPwd(){
+    void ForgetPwd() {
         startActivity(new Intent(this, ForgetPwd.class));
     }
 
+
+    /**
+     * 清空账号栏
+     */
+    @OnClick(R.id.login_username_clear)
+    void ClearAccount() {
+        edit_username.setText("");
+    }
+
+    private boolean isChecked = false;
+
+    /**
+     * 显示隐藏密码
+     */
+//    @OnClick(R.id.login_pwd_hidden)
+//    void PwdHidden(){
+//
+//    }
 
 }

@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.administrator.materialmanagement.Login;
 import com.example.administrator.materialmanagement.R;
+import com.lzy.okgo.db.CacheManager;
 
 import java.util.List;
 
@@ -28,9 +31,12 @@ import ui.ModifyPwd;
 import utile.AppUtils;
 import utile.BaseFragment;
 import utile.CheckVersion;
+import utile.DialogUtil;
 import utile.PermissionUtil;
 import utile.SharedPrefsUtil;
+import utile.ShowToast;
 
+import static com.example.administrator.materialmanagement.MyApplication.sqldb;
 import static utile.PermissionUtil.STORAGE_REQUESTCODE;
 
 /**
@@ -55,7 +61,7 @@ public class Mine extends BaseFragment implements EasyPermissions.PermissionCall
 
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-
+    private CacheManager cacheManager;
 
     public Mine() {
         // Required empty public constructor
@@ -168,5 +174,46 @@ public class Mine extends BaseFragment implements EasyPermissions.PermissionCall
         intent.putExtra("tag", "modify");
         startActivity(intent);
     }
+
+    /**
+     * 清空缓存
+     */
+    @OnClick(R.id.clear_cache)
+    void ClearCache() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.Prompt);
+        builder.setMessage(R.string.clearcache);
+        builder.setPositiveButton(R.string.mine_cancellation_dialog_btn2, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface mdialog, int which) {
+                dialog = DialogUtil.createLoadingDialog(getActivity(), R.string.loading_write);
+                handler.sendEmptyMessageDelayed(0, 2000);
+            }
+        });
+
+        builder.setNegativeButton(R.string.mine_cancellation_dialog_btn1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                
+            }
+        });
+        builder.show();
+    }
+
+
+    Handler handler = new Handler() {
+        @Override
+        public void dispatchMessage(Message msg) {
+            super.dispatchMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    CacheManager.getInstance().clear();
+                    sqldb.execSQL("delete from out_storage");
+                    dialog.dismiss();
+                    ShowToast.showShort(getActivity(), "清除成功");
+                    break;
+            }
+        }
+    };
 
 }

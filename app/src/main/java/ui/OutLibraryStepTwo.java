@@ -72,6 +72,7 @@ public class OutLibraryStepTwo extends BaseActivity {
     private TimePickerView pvTime;
     private Intent intent_data;
     private String errStr = "连接失败，请检查网络";
+    private boolean isTrue = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,6 +211,7 @@ public class OutLibraryStepTwo extends BaseActivity {
                                 String taskid = jsonObject.getString("taskid");
                                 intent_data = new Intent(OutLibraryStepTwo.this, OutLibraryResult.class);
                                 intent_data.putExtra("bean.dealersid", dealersid);
+                                intent_data.putExtra("dealersname", dlslss);
                                 intent_data.putExtra("outdate", ckrq_tv.getText().toString());
                                 intent_data.putExtra("tag", tag);
                                 intent_data.putExtra("taskid", taskid);
@@ -220,6 +222,7 @@ public class OutLibraryStepTwo extends BaseActivity {
                             e.printStackTrace();
                         }
                         errStr = "网络连接失败，请重试";
+                        isTrue = true;
                     }
 
                     @Override
@@ -233,6 +236,7 @@ public class OutLibraryStepTwo extends BaseActivity {
                                 String taskid = jsonObject.getString("taskid");
                                 intent_data = new Intent(OutLibraryStepTwo.this, OutLibraryResult.class);
                                 intent_data.putExtra("bean.dealersid", dealersid);
+                                intent_data.putExtra("dealersname", dlslss);
                                 intent_data.putExtra("outdate", ckrq_tv.getText().toString());
                                 intent_data.putExtra("tag", tag);
                                 intent_data.putExtra("taskid", taskid);
@@ -242,13 +246,16 @@ public class OutLibraryStepTwo extends BaseActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        errStr = "网络连接失败，加载缓存数据";
+                        errStr = "";
+                        isTrue = false;
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        ShowToast.showShort(OutLibraryStepTwo.this, errStr);
+                        if (isTrue) {
+                            ShowToast.showShort(OutLibraryStepTwo.this, errStr);
+                        }
                     }
 
                     @Override

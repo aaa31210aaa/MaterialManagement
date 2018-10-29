@@ -153,4 +153,9 @@ public class PortIpAddress {
     public static String FangCuan() {
         return host + "mfc/fangcuan.action";
     }
+
+    //离线批量出库
+    public static String OffLineCk(){
+        return host+"mouttask/doBatchOutSave.action";
+    }
 }

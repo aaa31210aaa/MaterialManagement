@@ -3,6 +3,9 @@ package utile;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
 /**
  * 应用辅助类
@@ -79,6 +82,45 @@ public class AppUtils {
             sdkVersion = 0;
         }
         return sdkVersion;
+    }
+
+
+    /**
+     * 禁止edittext 使用空格
+     */
+    public static void PwdNoSpace(final EditText editText) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                NoSpace(editText, s, start);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+
+    /**
+     * 禁止输入框输入空格
+     */
+    public static void NoSpace(EditText editText, CharSequence str, int start) {
+        if (str.toString().contains(" ")) {
+            String[] strs = str.toString().split(" ");
+            String str1 = "";
+            for (int i = 0; i < strs.length; i++) {
+                str1 += strs[i];
+            }
+            editText.setText(str1);
+            editText.setSelection(start);
+        }
     }
 
 }

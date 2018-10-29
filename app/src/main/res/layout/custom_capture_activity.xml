@@ -32,6 +32,7 @@
         android:src="@drawable/flash_selected_selector" />
 
     <RelativeLayout
+        android:id="@+id/title_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_30"
@@ -45,19 +46,50 @@
             android:src="@drawable/back" />
 
         <ImageView
-            android:id="@+id/submit"
+            android:id="@+id/upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/local_barcode_size"
+            android:padding="@dimen/qb_px_10"
+            android:src="@drawable/upload" />
+
+        <TextView
+            android:id="@+id/local_barcode_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/qb_px_10"
             android:padding="@dimen/qb_px_10"
-            android:src="@drawable/submit" />
+            android:text=""
+            android:textColor="@color/white" />
+
     </RelativeLayout>
 
+
+    <TextView
+        android:id="@+id/custom_capture_tv_jxsname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_rl"
+        android:padding="@dimen/qb_px_5"
+        android:text=""
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/custom_capture_rwdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/custom_capture_tv_jxsname"
+        android:padding="@dimen/qb_px_5"
+        android:textColor="@color/white" />
+
     <RelativeLayout
+        android:id="@+id/sm_num_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/qb_px_60"
+        android:layout_marginBottom="@dimen/qb_px_20"
         android:gravity="center">
 
         <TextView
@@ -76,6 +108,28 @@
             android:text=""
             android:textColor="@color/white"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/sm_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_15"
+            android:layout_toRightOf="@id/sm_num_tv"
+            android:text="@string/barcode_result"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/sm_result_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/sm_result"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+
     </RelativeLayout>
+
 
 </RelativeLayout>

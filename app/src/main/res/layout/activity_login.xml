@@ -31,28 +31,76 @@
             android:textSize="19sp" />
     </LinearLayout>
 
-
-    <EditText
-        android:id="@+id/edit_username"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/qb_px_10"
-        android:layout_marginTop="@dimen/qb_px_10"
-        android:hint="@string/login_account_hint_text"
-        android:textColorHint="@color/white"
-        android:textColor="@android:color/white" />
+        android:layout_marginTop="@dimen/qb_px_10">
 
+        <EditText
+            android:id="@+id/edit_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_edittext"
+            android:drawableLeft="@drawable/icon_account"
+            android:drawablePadding="@dimen/qb_px_10"
+            android:hint="@string/login_account_hint_text"
+            android:paddingBottom="@dimen/qb_px_5"
+            android:paddingLeft="@dimen/qb_px_10"
+            android:paddingRight="@dimen/qb_px_50"
+            android:paddingTop="@dimen/qb_px_5"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray_pressed" />
 
-    <EditText
-        android:id="@+id/edit_password"
+        <ImageButton
+            android:id="@+id/login_username_clear"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/qb_px_15"
+            android:background="@null"
+            android:padding="@dimen/qb_px_5"
+            android:src="@drawable/clear" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/qb_px_10"
-        android:layout_marginTop="@dimen/qb_px_10"
-        android:hint="@string/login_pwd_hint_text"
-        android:inputType="textPassword"
-        android:textColorHint="@color/white"
-        android:textColor="@android:color/white" />
+        android:layout_marginTop="@dimen/qb_px_10">
+
+        <EditText
+            android:id="@+id/edit_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_edittext"
+            android:drawableLeft="@drawable/icon_pwd"
+            android:hint="@string/login_pwd_hint_text"
+            android:inputType="textPassword"
+            android:paddingBottom="@dimen/qb_px_5"
+            android:drawablePadding="@dimen/qb_px_10"
+            android:paddingLeft="@dimen/qb_px_10"
+            android:paddingRight="@dimen/qb_px_50"
+            android:paddingTop="@dimen/qb_px_5"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray_pressed" />
+
+        <CheckBox
+            android:id="@+id/login_pwd_hidden"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/qb_px_15"
+            android:background="@drawable/login_pwd_hidden"
+            android:button="@null"
+            />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/acc_pwd_ll"
@@ -98,8 +146,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:text="忘记密码"
-        android:visibility="gone"
         android:padding="@dimen/qb_px_10"
-        android:textColor="@color/white"/>
+        android:text="忘记密码"
+        android:textColor="@color/white"
+        android:visibility="gone" />
 </LinearLayout>

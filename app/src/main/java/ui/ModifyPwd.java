@@ -182,12 +182,17 @@ public class ModifyPwd extends BaseActivity {
         if (isChecked) {
             etv_newpwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             etv_newpwd_again.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            etv_newpwd.setSelection(etv_newpwd.getText().toString().length());
+            etv_newpwd_again.setSelection(etv_newpwd_again.getText().toString().length());
+
             displaypwd_btn.setBackgroundResource(R.drawable.displaypwd);
             display_hidden_tv.setText(R.string.displayPwd);
             isChecked = false;
         } else {
             etv_newpwd.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             etv_newpwd_again.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            etv_newpwd.setSelection(etv_newpwd.getText().toString().length());
+            etv_newpwd_again.setSelection(etv_newpwd_again.getText().toString().length());
             displaypwd_btn.setBackgroundResource(R.drawable.hiddenpwd);
             display_hidden_tv.setText(R.string.hiddenPwd);
             isChecked = true;

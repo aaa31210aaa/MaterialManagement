@@ -37,6 +37,8 @@
     <string name="loading_write">请稍后...</string>
     <string name="loading">加载中...</string>
 
+
+
     <!--出 退 调剂 库历史-->
     <string name="input_search">请输入关键字搜索</string>
     <string name="ckrwlb">出库任务列表</string>
@@ -68,6 +70,10 @@
     <string name="permission_external_storage">App需要用到读写权限</string>
     <string name="tips_scan_code">将二维码/条形码放入框内，即可自动扫码</string>
     <string name="sm_num">扫码数：</string>
+    <string name="newTask">创建任务中...</string>
+    <string name="uploading">上传中...</string>
+    <string name="barcode_result">当前扫码结果：</string>
+
 
     <!--代理商，零售商-->
     <string name="bh">编号</string>
@@ -104,6 +110,7 @@
     <string name="mine_cancellation_dialog_content">请问是否要注销此账号</string>
     <string name="mine_cancellation_dialog_btn1">取消</string>
     <string name="mine_cancellation_dialog_btn2">确定</string>
+    <string name="clearcache">请问是否清空缓存</string>
 
     <!--修改密码-->
     <string name="oldpwdEmpty">请填写原始密码</string>

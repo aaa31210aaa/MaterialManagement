@@ -84,8 +84,8 @@ public class OutLibraryResult extends BaseActivity implements EasyPermissions.Pe
     private String taskid = "";
     private String dealersid = "";
     private String outdate = "";
+    private String dealersname = "";
     private String errStr = "连接失败，请检查网络";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +105,7 @@ public class OutLibraryResult extends BaseActivity implements EasyPermissions.Pe
     protected void initData() {
         Intent intent = getIntent();
         dealersid = intent.getStringExtra("bean.dealersid");
+        dealersname = intent.getStringExtra("dealersname");
         outdate = intent.getStringExtra("outdate");
         tag = intent.getStringExtra("tag");
         taskid = intent.getStringExtra("taskid");
@@ -175,14 +176,12 @@ public class OutLibraryResult extends BaseActivity implements EasyPermissions.Pe
                             if (jsonObject.getString(CODE).equals(SUCCESS_CODE)) {
                                 mDatas.clear();
                                 JSONArray jsonArray = jsonObject.getJSONArray("maxcodelist");
-                                if (jsonArray.length() > 0) {
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        OutLibraryHistoryBean bean = new OutLibraryHistoryBean();
-                                        bean.setBm(jsonArray.optJSONObject(i).getString(keyCode + ".maxcode"));
-                                        mDatas.add(bean);
-                                    }
-                                    adapter.setNewData(mDatas);
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    OutLibraryHistoryBean bean = new OutLibraryHistoryBean();
+                                    bean.setBm(jsonArray.optJSONObject(i).getString(keyCode + ".maxcode"));
+                                    mDatas.add(bean);
                                 }
+                                adapter.setNewData(mDatas);
                             } else {
                                 ShowToast.showShort(OutLibraryResult.this, err);
                             }
@@ -202,14 +201,12 @@ public class OutLibraryResult extends BaseActivity implements EasyPermissions.Pe
                             if (jsonObject.getString(CODE).equals(SUCCESS_CODE)) {
                                 mDatas.clear();
                                 JSONArray jsonArray = jsonObject.getJSONArray("maxcodelist");
-                                if (jsonArray.length() > 0) {
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        OutLibraryHistoryBean bean = new OutLibraryHistoryBean();
-                                        bean.setBm(jsonArray.optJSONObject(i).getString(keyCode + ".maxcode"));
-                                        mDatas.add(bean);
-                                    }
-                                    adapter.setNewData(mDatas);
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    OutLibraryHistoryBean bean = new OutLibraryHistoryBean();
+                                    bean.setBm(jsonArray.optJSONObject(i).getString(keyCode + ".maxcode"));
+                                    mDatas.add(bean);
                                 }
+                                adapter.setNewData(mDatas);
                             } else {
                                 ShowToast.showShort(OutLibraryResult.this, err);
                             }
@@ -300,6 +297,7 @@ public class OutLibraryResult extends BaseActivity implements EasyPermissions.Pe
         if (TextUtils.isEmpty(path)) {
             return;
         }
+
         //异步解析
         asyncThread(new Runnable() {
             @Override
@@ -383,6 +381,8 @@ public class OutLibraryResult extends BaseActivity implements EasyPermissions.Pe
         Intent intent = new Intent(this, cls);
         intent.putExtra(KEY_TITLE, title);
         intent.putExtra("tag", tag);
+        intent.putExtra("dealersid", dealersid);
+        intent.putExtra("dealersname", dealersname);
         intent.putExtra("postUrl", postUrl);
         intent.putExtra("keyCode", keyCode);
         intent.putExtra("taskid", taskid);
