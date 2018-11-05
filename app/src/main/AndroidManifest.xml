@@ -115,7 +115,12 @@
         <activity
             android:name="ui.CustomCaptureActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="ui.OffLineCk"></activity>
+        <activity android:name="ui.OffLineCkHistory" />
+        <activity android:name="ui.OffLineBarcode" />
+        <activity android:name="ui.OffLineCk" />
+        <activity android:name="ui.OfflineCkStepTwo" />
+        <activity android:name="ui.OfflineCkResult" />
+        <activity android:name="ui.OffLineCkCustomCaptureActivity"></activity>
     </application>
 
 </manifest>

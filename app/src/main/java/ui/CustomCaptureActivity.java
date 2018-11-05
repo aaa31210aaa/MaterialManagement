@@ -9,8 +9,13 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.materialmanagement.R;
@@ -34,7 +39,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import utile.CustomDialog;
 import utile.DialogUtil;
-import utile.NetUtils;
 import utile.PortIpAddress;
 import utile.SharedPrefsUtil;
 import utile.ShowToast;
@@ -52,7 +56,7 @@ public class CustomCaptureActivity extends CaptureActivity {
     private BeepManager beepManager;
     private List<OutLibraryHistoryBean> mDatas; //存放码的集合
     private int sm_num = 0; //扫码的数量和
-    private int local_num = 0;
+    //    private int local_num = 0;
     private boolean isScanning = true;
 
     private String tag = "";
@@ -63,16 +67,29 @@ public class CustomCaptureActivity extends CaptureActivity {
     private String taskid = "";
     private String outdate = "";
     private String resultString = "";
-    @BindView(R.id.upload)
-    ImageView upload;
-    @BindView(R.id.local_barcode_size)
-    TextView local_barcode_size;
+    //    @BindView(R.id.upload)
+//    ImageView upload;
+//    @BindView(R.id.local_barcode_size)
+//    TextView local_barcode_size;
     @BindView(R.id.custom_capture_tv_jxsname)
     TextView custom_capture_tv_jxsname;
     @BindView(R.id.custom_capture_rwdate)
     TextView custom_capture_rwdate;
     @BindView(R.id.sm_result_tv)
     TextView sm_result_tv;
+    @BindView(R.id.manual_input_etv)
+    EditText manual_input_etv;
+    @BindView(R.id.manual_input_btn)
+    Button manual_input_btn;
+    @BindView(R.id.manual_etv_clear)
+    ImageView manual_etv_clear;
+    @BindView(R.id.edit_rl)
+    RelativeLayout edit_rl;
+    //    @BindView(R.id.open_shrink)
+//    ImageView open_shrink;
+    private boolean isOpen = false;
+
+
     private static CustomDialog.Builder builder;
     private Dialog myDialog;
 
@@ -107,32 +124,33 @@ public class CustomCaptureActivity extends CaptureActivity {
         custom_capture_tv_jxsname.setText("当前任务经销商名称：" + dealersname);
         custom_capture_rwdate.setText("当前任务创建时间：" + outdate + "点");
 
+        ManualEdittext();
 
         sm_num_tv.setText(String.valueOf(sm_num));
         beepManager = new BeepManager(this);
         StatusBarUtils.transparencyBar(this);
         mDatas = new ArrayList<>();
 
-        barCodeList = new ArrayList<>();
-        //通过经销商id和时间 遍历出存放本地数据库中的码值
-        try {
-            Cursor cursor = sqldb.rawQuery("select * from out_storage where  Dealersid=? and Date=?", new String[]{dealersid, outdate});
-            while (cursor.moveToNext()) {
-                OutLibraryHistoryBean bean = new OutLibraryHistoryBean();
-                bean.setBm(cursor.getString(cursor.getColumnIndex("Barcode")));
-                barCodeList.add(bean);
-            }
+//        barCodeList = new ArrayList<>();
+//        //通过经销商id和时间 遍历出存放本地数据库中的码值
+//        try {
+//            Cursor cursor = sqldb.rawQuery("select * from out_storage where  DealersName=? and Date=?", new String[]{dealersname, outdate});
+//            while (cursor.moveToNext()) {
+//                OutLibraryHistoryBean bean = new OutLibraryHistoryBean();
+//                bean.setBm(cursor.getString(cursor.getColumnIndex("Barcode")));
+//                barCodeList.add(bean);
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        local_barcode_size.setText(barCodeList.size() + "");
 
-        local_barcode_size.setText(barCodeList.size() + "");
-
-        if (tag.equals("tk")) {
-            upload.setVisibility(View.GONE);
-            local_barcode_size.setVisibility(View.GONE);
-        }
+//        if (tag.equals("tk")) {
+//            upload.setVisibility(View.GONE);
+//            local_barcode_size.setVisibility(View.GONE);
+//        }
 
         getBeepManager().setPlayBeep(true);
         getBeepManager().setVibrate(true);
@@ -147,80 +165,36 @@ public class CustomCaptureActivity extends CaptureActivity {
     /**
      * 离线提交存入本地的码值
      */
-    @OnClick(R.id.upload)
-    void Submit() {
-        //有网的时候遍历本地数据库并提交当前这个任务的数据   通过经销商id 时间 去查询
-        if (NetUtils.isConnected(this)) {
-            barCodeList = new ArrayList<>();
-            //通过经销商id和时间 遍历出存放本地数据库中的码值
-            try {
-                Cursor cursor = sqldb.rawQuery("select * from out_storage where  Dealersid=? and Date=?", new String[]{dealersid, outdate});
-
-                while (cursor.moveToNext()) {
-                    OutLibraryHistoryBean bean = new OutLibraryHistoryBean();
-                    bean.setBm(cursor.getString(cursor.getColumnIndex("Barcode")));
-                    barCodeList.add(bean);
-                }
-
-                if (barCodeList.size() > 0) {
-                    NewTask();
-                } else {
-                    ShowToast.showShort(this, "当前任务本地未保存码值");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            ShowToast.showShort(this, "请检查网络后提交本地数据");
-        }
-    }
-
-
-    /**
-     * 通过当前任务的经销商id 和时间 先创建当前的进度任务
-     */
-    private void NewTask() {
-        dialog = DialogUtil.createLoadingDialog(CustomCaptureActivity.this, R.string.newTask);
-        OkGo.<String>get(PortIpAddress.OutLibraryStepTwo())
-                .tag(this)
-                .params("loginuserid", SharedPrefsUtil.getValue(this, "userInfo", "userid", ""))
-                .params("loginusertype", SharedPrefsUtil.getValue(this, "userInfo", "usertype", ""))
-                .params("bean.dealersid", dealersid)
-                .params("bean.outdate", outdate)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        try {
-                            String jsonStr = response.body().toString();
-                            JSONObject jsonObject = new JSONObject(jsonStr);
-                            String err = jsonObject.getString(MESSAGE);
-                            if (jsonObject.getString(CODE).equals(SUCCESS_CODE)) {
-                                ShowToast.showShort(CustomCaptureActivity.this, "创建任务成功");
-                                mHandler.sendEmptyMessageDelayed(2, 2000);
-                            } else {
-                                ShowToast.showShort(CustomCaptureActivity.this, err);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        dialog.dismiss();
-                    }
+//    @OnClick(R.id.upload)
+//    void Submit() {
+//        //有网的时候遍历本地数据库并提交当前这个任务的数据   通过经销商id 时间 去查询
+//        if (NetUtils.isConnected(this)) {
+//            barCodeList = new ArrayList<>();
+//            //通过经销商id和时间 遍历出存放本地数据库中的码值
+//            try {
+//                Cursor cursor = sqldb.rawQuery("select * from out_storage where  DealersName=? and Date=?", new String[]{dealersname, outdate});
+//
+//                while (cursor.moveToNext()) {
+//                    OutLibraryHistoryBean bean = new OutLibraryHistoryBean();
+//                    bean.setBm(cursor.getString(cursor.getColumnIndex("Barcode")));
+//                    barCodeList.add(bean);
+//                }
+//
+//                if (barCodeList.size() > 0) {
+//                    NewTask();
+//                } else {
+//                    ShowToast.showShort(this, "当前任务本地未保存码值");
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            ShowToast.showShort(this, "请检查网络后提交本地数据");
+//        }
+//    }
 
 
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        ShowToast.showShort(CustomCaptureActivity.this, R.string.connect_err);
-                        dialog.dismiss();
-                    }
 
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
-                    }
-                });
-    }
 
 
     /**
@@ -246,9 +220,9 @@ public class CustomCaptureActivity extends CaptureActivity {
                             if (jsonObject.getString(CODE).equals(SUCCESS_CODE)) {
                                 ShowToast.showShort(CustomCaptureActivity.this, "上传成功");
                                 //提交完本地数据成功之后  将当前本地数据库中的数据清空
-                                sqldb.execSQL("delete from out_storage where Dealersid=? and Date=?", new String[]{dealersid, outdate});
+//                                sqldb.execSQL("delete from out_storage where DealersName=? and Date=?", new String[]{dealersname, outdate});
                                 //设置提示为0
-                                local_barcode_size.setText("0");
+//                                local_barcode_size.setText("0");
                             } else {
                                 ShowToast.showShort(CustomCaptureActivity.this, err);
                             }
@@ -299,7 +273,7 @@ public class CustomCaptureActivity extends CaptureActivity {
 //                        if (tag.equals("ck")) {
 //                            try {
 //                                //判断表中是否存在相同数据
-//                                cursor = sqldb.rawQuery("select * from out_storage where Dealersid=? and Barcode=? and Date =?", new String[]{dealersid, resultString, outdate});
+//                                cursor = sqldb.rawQuery("select * from out_storage where DealersName=? and Barcode=? and Date =?", new String[]{dealersname, resultString, outdate});
 //
 //                                if (cursor.getCount() > 0) {
 //                                    ShowToast.showShort(CustomCaptureActivity.this, "本地已存在此条信息");
@@ -371,26 +345,36 @@ public class CustomCaptureActivity extends CaptureActivity {
             beepManager.setVibrate(false);
             resultString = resultString.replace(titleCode, "MIN");
 
-            if (NetUtils.isConnected(this)) {
+//            if (NetUtils.isConnected(this)) {
                 mConnect(resultString);
-            } else {
-                if (tag.equals("ck")) {
-                    try {
-                        //判断表中是否存在相同数据
-                        cursor = sqldb.rawQuery("select * from out_storage where Dealersid=? and Barcode=? and Date =?", new String[]{dealersid, resultString, outdate});
+//            } else {
+//                if (tag.equals("ck")) {
+//                    try {
+//                        //判断表中是否存在相同数据
+////                        cursor = sqldb.rawQuery
+////                                ("select * from out_storage where UserId=? and DealersName=? and Barcode=? and Date =?",
+////                                        new String[]{SharedPrefsUtil.getValue(CustomCaptureActivity.this, "userInfo", "userid", ""),
+////                                                dealersname, resultString, outdate});
+//                        cursor = sqldb.rawQuery
+//                                ("select * from out_storage where UserId=? and DealersId=? and Barcode=? and Date =?",
+//                                        new String[]{SharedPrefsUtil.getValue(CustomCaptureActivity.this, "userInfo", "userid", ""),
+//                                                dealersid, resultString, outdate});
+//
+//
+//                        if (cursor.getCount() > 0) {
+//                            ShowToast.showShort(this, "本地已存在此条信息");
+//                        } else {
+//                            mHandler.sendEmptyMessage(1);
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                } else {
+//                    ShowToast.showShort(CustomCaptureActivity.this, R.string.connect_err);
+//                }
+//            }
 
-                        if (cursor.getCount() > 0) {
-                            ShowToast.showShort(this, "本地已存在此条信息");
-                        } else {
-                            mHandler.sendEmptyMessage(1);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    ShowToast.showShort(CustomCaptureActivity.this, R.string.connect_err);
-                }
-            }
+
 //            mConnect(resultString);
             mHandler.sendEmptyMessageDelayed(0, 3000);  //避免过快触发影响体验
             sm_result_tv.setText(resultString);
@@ -429,18 +413,18 @@ public class CustomCaptureActivity extends CaptureActivity {
                     break;
                 case 1:
                     try {
-                        sqldb.execSQL("insert into out_storage(Dealersid,Date,Barcode) values(?,?,?)", new String[]{
-                                dealersid, outdate, resultString
+                        sqldb.execSQL("insert into out_storage(UserId,DealersId,DealersName,Date,Barcode) values(?,?,?,?,?)", new String[]{
+                                SharedPrefsUtil.getValue(CustomCaptureActivity.this, "userInfo", "userid", ""), dealersid, dealersname, outdate, resultString
                         });
-                        local_num++;
-                        local_barcode_size.setText((local_num + barCodeList.size()) + "");
+//                        local_num++;
+//                        local_barcode_size.setText((local_num + barCodeList.size()) + "");
                         ShowToast.showShort(CustomCaptureActivity.this, "存入本地数据库成功");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
                     break;
                 case 2:
-                    UpLoadBarcode();
+//                    UpLoadBarcode();
                     break;
                 default:
                     break;
@@ -529,6 +513,116 @@ public class CustomCaptureActivity extends CaptureActivity {
                 clickFlash(v);
                 break;
         }
+    }
+
+    /**
+     * 监听输入框
+     */
+    private void ManualEdittext() {
+        manual_input_etv.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                NoSpace(manual_input_etv, s, start);
+                if (manual_input_etv.getText().toString().length() > 0) {
+                    manual_input_btn.setEnabled(true);
+                    manual_etv_clear.setVisibility(View.VISIBLE);
+                } else {
+                    manual_input_btn.setEnabled(false);
+                    manual_etv_clear.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    /**
+     * 手动输入提交
+     */
+    @OnClick(R.id.manual_input_btn)
+    void ManualInput() {
+        mConnect(manual_input_etv.getText().toString());
+    }
+
+//    @OnClick(R.id.open_shrink)
+//    void OpenShrink() {
+//        if (isOpen) {
+//            SettingEditext(edit_rl, 0);
+//        } else {
+//            SettingEditext(edit_rl, 100);
+//        }
+//
+//    }
+
+
+//    private void SettingEditext(final View view, int toLength) {
+//        // 步骤1：设置属性数值的初始值 & 结束值
+//        ValueAnimator valueAnimator = ValueAnimator.ofInt(view.getLayoutParams().width, toLength);
+//        // 步骤2：设置动画的播放各种属性
+//        valueAnimator.setDuration(2000);
+//        // 步骤3：将属性数值手动赋值给对象的属性:此处是将 值 赋给 按钮的宽度
+//        // 设置更新监听器：即数值每次变化更新都会调用该方法
+//        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animator) {
+//                int currentValue = (Integer) animator.getAnimatedValue();
+//                // 获得每次变化后的属性值
+//                System.out.println(currentValue);
+//                // 输出每次变化后的属性值进行查看
+//                view.getLayoutParams().width = currentValue;
+//                // 每次值变化时，将值手动赋值给对象的属性
+//                // 即将每次变化后的值 赋 给按钮的宽度，这样就实现了按钮宽度属性的动态变化
+//                // 步骤4：刷新视图，即重新绘制，从而实现动画效果
+//                view.requestLayout();
+//            }
+//        });
+//        // 启动动画
+//        valueAnimator.start();
+//
+//        valueAnimator.addListener(new Animator.AnimatorListener() {
+//            @Override
+//            public void onAnimationStart(Animator animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                if (isOpen) {
+//                    open_shrink.setImageResource(R.drawable.shrink);
+//                    isOpen = false;
+//                } else {
+//                    open_shrink.setImageResource(R.drawable.open);
+//                    isOpen = true;
+//                }
+//            }
+//
+//            @Override
+//            public void onAnimationCancel(Animator animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animator animation) {
+//
+//            }
+//        });
+//    }
+
+
+    /**
+     * 清空手动输入栏
+     */
+    @OnClick(R.id.manual_etv_clear)
+    void ClearEdittext() {
+        manual_input_etv.setText("");
     }
 
     @Override

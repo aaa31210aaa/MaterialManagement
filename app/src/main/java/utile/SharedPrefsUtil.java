@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class SharedPrefsUtil {
+
     /**
      * 向SharedPreferences中写入int类型数据
      *

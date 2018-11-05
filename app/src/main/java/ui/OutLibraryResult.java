@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +21,6 @@ import com.example.administrator.materialmanagement.R;
 import com.king.zxing.Intents;
 import com.king.zxing.util.CodeUtils;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
@@ -41,6 +41,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 import utile.BaseActivity;
 import utile.DialogUtil;
 import utile.DividerItemDecoration;
+import utile.PermissionSettingPage;
 import utile.PortIpAddress;
 import utile.SharedPrefsUtil;
 import utile.ShowToast;
@@ -159,9 +160,9 @@ public class OutLibraryResult extends BaseActivity implements EasyPermissions.Pe
     private void ShowBm() {
         dialog = DialogUtil.createLoadingDialog(OutLibraryResult.this, R.string.loading_write);
         OkGo.<String>get(url)
-                .tag(this)
-                .cacheKey("outlibrary_result")
-                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                .tag(TAG)
+//                .cacheKey("outlibrary_result" + SharedPrefsUtil.getValue(this, "userInfo", "userid", "") + dealersname + outdate)
+//                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                 .params("loginuserid", SharedPrefsUtil.getValue(this, "userInfo", "userid", ""))
                 .params("loginusertype", SharedPrefsUtil.getValue(this, "userInfo", "usertype", ""))
                 .params(PortIpAddress.Bean + "dealersid", dealersid)
@@ -181,7 +182,11 @@ public class OutLibraryResult extends BaseActivity implements EasyPermissions.Pe
                                     bean.setBm(jsonArray.optJSONObject(i).getString(keyCode + ".maxcode"));
                                     mDatas.add(bean);
                                 }
-                                adapter.setNewData(mDatas);
+                                if (mDatas.size() > 0) {
+                                    adapter.setNewData(mDatas);
+                                } else {
+                                    adapter.setEmptyView(R.layout.nodata_layout, (ViewGroup) recyclerView.getParent());
+                                }
                             } else {
                                 ShowToast.showShort(OutLibraryResult.this, err);
                             }
@@ -191,30 +196,30 @@ public class OutLibraryResult extends BaseActivity implements EasyPermissions.Pe
                         errStr = "网络连接失败，请重试";
                     }
 
-                    @Override
-                    public void onCacheSuccess(Response<String> response) {
-                        super.onCacheSuccess(response);
-                        try {
-                            JSONObject jsonObject = new JSONObject(response.body().toString());
-                            String err = jsonObject.getString(MESSAGE);
-
-                            if (jsonObject.getString(CODE).equals(SUCCESS_CODE)) {
-                                mDatas.clear();
-                                JSONArray jsonArray = jsonObject.getJSONArray("maxcodelist");
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    OutLibraryHistoryBean bean = new OutLibraryHistoryBean();
-                                    bean.setBm(jsonArray.optJSONObject(i).getString(keyCode + ".maxcode"));
-                                    mDatas.add(bean);
-                                }
-                                adapter.setNewData(mDatas);
-                            } else {
-                                ShowToast.showShort(OutLibraryResult.this, err);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        errStr = "网络连接失败，加载缓存数据";
-                    }
+//                    @Override
+//                    public void onCacheSuccess(Response<String> response) {
+//                        super.onCacheSuccess(response);
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response.body().toString());
+//                            String err = jsonObject.getString(MESSAGE);
+//
+//                            if (jsonObject.getString(CODE).equals(SUCCESS_CODE)) {
+//                                mDatas.clear();
+//                                JSONArray jsonArray = jsonObject.getJSONArray("maxcodelist");
+//                                for (int i = 0; i < jsonArray.length(); i++) {
+//                                    OutLibraryHistoryBean bean = new OutLibraryHistoryBean();
+//                                    bean.setBm(jsonArray.optJSONObject(i).getString(keyCode + ".maxcode"));
+//                                    mDatas.add(bean);
+//                                }
+//                                adapter.setNewData(mDatas);
+//                            } else {
+//                                ShowToast.showShort(OutLibraryResult.this, err);
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                        errStr = "网络连接失败，加载缓存数据";
+//                    }
 
                     @Override
                     public void onError(Response<String> response) {
@@ -258,7 +263,7 @@ public class OutLibraryResult extends BaseActivity implements EasyPermissions.Pe
      */
     private void mConnect(String result) {
         OkGo.<String>get(postUrl)
-                .tag(this)
+                .tag(TAG)
                 .params("loginuserid", SharedPrefsUtil.getValue(this, "userInfo", "userid", ""))
                 .params("loginusertype", SharedPrefsUtil.getValue(this, "userInfo", "usertype", ""))
                 .params(keyCode + ".taskid", taskid)
@@ -331,30 +336,32 @@ public class OutLibraryResult extends BaseActivity implements EasyPermissions.Pe
      * 请求权限成功。
      *
      * @param requestCode
-     * @param list
+     * @param perms
      */
     @Override
-    public void onPermissionsGranted(int requestCode, List<String> list) {
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
         // Some permissions have been granted
-
+        startScan(cls, title);
     }
 
     /**
      * 请求权限失败。
      *
      * @param requestCode
-     * @param list
+     * @param perms
      */
     @Override
-    public void onPermissionsDenied(int requestCode, List<String> list) {
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
         // Some permissions have been denied
         // ...
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            PermissionSettingPage.GoToPermissionSetting(this);
+        }
     }
 
     /**
      * 检测拍摄权限
      */
-    @AfterPermissionGranted(RC_CAMERA)
     private void checkCameraPermissions() {
         String[] perms = {Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {//有权限

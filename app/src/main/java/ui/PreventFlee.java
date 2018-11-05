@@ -3,6 +3,7 @@ package ui;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.administrator.materialmanagement.PreventFleeAdapter;
 import com.example.administrator.materialmanagement.R;
 import com.king.zxing.CaptureActivity;
 import com.king.zxing.Intents;
@@ -27,15 +27,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import adapter.PreventFleeAdapter;
 import bean.OutLibraryHistoryBean;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import utile.BaseActivity;
 import utile.DialogUtil;
 import utile.DividerItemDecoration;
+import utile.PermissionSettingPage;
 import utile.PortIpAddress;
 import utile.SharedPrefsUtil;
 import utile.ShowToast;
@@ -51,10 +52,10 @@ import static utile.PortIpAddress.SUCCESS_CODE;
 /**
  * 防窜
  */
-public class PreventFlee extends BaseActivity {
+public class PreventFlee extends BaseActivity implements EasyPermissions.PermissionCallbacks {
     @BindView(R.id.title_name)
     TextView title_name;
-//    @BindView(R.id.title_name_right)
+    //    @BindView(R.id.title_name_right)
 //    TextView title_name_right;
     @BindView(R.id.fccx)
     TextView fccx;
@@ -141,7 +142,7 @@ public class PreventFlee extends BaseActivity {
 
     private void mConnect() {
         OkGo.<String>get(PortIpAddress.FangCuan())
-                .tag(this)
+                .tag(TAG)
                 .params("loginuserid", SharedPrefsUtil.getValue(this, "userInfo", "userid", ""))
                 .params("loginusertype", SharedPrefsUtil.getValue(this, "userInfo", "usertype", ""))
                 .params("mincode", code_etv.getText().toString())
@@ -216,7 +217,7 @@ public class PreventFlee extends BaseActivity {
     /**
      * 检测拍摄权限
      */
-    @AfterPermissionGranted(RC_CAMERA)
+//    @AfterPermissionGranted(RC_CAMERA)
     private void checkCameraPermissions() {
         String[] perms = {Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {//有权限
@@ -239,6 +240,45 @@ public class PreventFlee extends BaseActivity {
         Intent intent = new Intent(this, cls);
         intent.putExtra(KEY_TITLE, title);
         ActivityCompat.startActivityForResult(this, intent, REQUEST_CODE_SCAN, optionsCompat.toBundle());
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    /**
+     * 请求权限成功。
+     *
+     * @param requestCode
+     * @param perms
+     */
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        startScan(cls, title);
+    }
+
+    /**
+     * 请求权限失败。
+     *
+     * @param requestCode
+     * @param perms
+     */
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+//            new AppSettingsDialog.Builder(this)
+//                    .setTitle(R.string.permission_title)
+//                    .setRationale(R.string.permission_tips)
+//                    .build()
+//                    .show();
+
+            PermissionSettingPage.GoToPermissionSetting(this);
+        }
     }
 
 

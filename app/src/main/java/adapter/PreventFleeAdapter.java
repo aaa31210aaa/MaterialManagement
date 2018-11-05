@@ -1,9 +1,10 @@
-package com.example.administrator.materialmanagement;
+package adapter;
 
 import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.administrator.materialmanagement.R;
 
 import java.util.List;
 

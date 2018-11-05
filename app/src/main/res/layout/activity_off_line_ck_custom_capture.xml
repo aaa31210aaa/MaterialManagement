@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    tools:context="ui.OffLineCkCustomCaptureActivity">
 
     <SurfaceView
         android:id="@+id/preview_view"
@@ -44,25 +45,6 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/qb_px_10"
             android:src="@drawable/back" />
-
-        <!--<ImageView-->
-            <!--android:id="@+id/upload"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_toLeftOf="@+id/local_barcode_size"-->
-            <!--android:padding="@dimen/qb_px_10"-->
-            <!--android:src="@drawable/upload" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/local_barcode_size"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginRight="@dimen/qb_px_10"-->
-            <!--android:padding="@dimen/qb_px_10"-->
-            <!--android:text=""-->
-            <!--android:textColor="@color/white" />-->
 
     </RelativeLayout>
 
@@ -126,7 +108,7 @@
                 android:paddingRight="@dimen/qb_px_10"
                 android:src="@drawable/clear"
                 android:visibility="gone"
-             />
+                />
         </RelativeLayout>
 
         <!--<ImageView-->

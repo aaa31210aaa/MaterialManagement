@@ -63,6 +63,7 @@
             android:layout_marginRight="@dimen/qb_px_15"
             android:background="@null"
             android:padding="@dimen/qb_px_5"
+            android:visibility="gone"
             android:src="@drawable/clear" />
 
     </RelativeLayout>
@@ -98,6 +99,7 @@
             android:layout_marginRight="@dimen/qb_px_15"
             android:background="@drawable/login_pwd_hidden"
             android:button="@null"
+            android:visibility="gone"
             />
 
     </RelativeLayout>

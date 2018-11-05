@@ -35,11 +35,14 @@ import butterknife.OnClick;
 import ui.AgentRetailer;
 import ui.DlsLss;
 import ui.OffLineCk;
+import ui.OffLineCkHistory;
 import ui.OutLibraryStepOne;
 import ui.PreventFlee;
 import utile.BaseFragment;
 import utile.LocalImageHolderView;
+import utile.NetUtils;
 import utile.SharedPrefsUtil;
+import utile.ShowToast;
 
 import static com.example.administrator.materialmanagement.Login.AGENT_CODE;
 import static com.example.administrator.materialmanagement.Login.ONE_CODE;
@@ -86,6 +89,9 @@ public class Workbench extends BaseFragment {
     TextView dls_tv;
     @BindView(R.id.lxck_ll)
     LinearLayout lxck_ll;
+    @BindView(R.id.lxckls_ll)
+    LinearLayout lxckls_ll;
+
     @BindView(R.id.tiaoji_ll)
     LinearLayout tiaoji_ll;
     @BindView(R.id.tiaojihis_ll)
@@ -121,6 +127,7 @@ public class Workbench extends BaseFragment {
             tk_ll.setVisibility(View.GONE);
             dls_ll.setVisibility(View.GONE);
             lxck_ll.setVisibility(View.GONE);
+            lxckls_ll.setVisibility(View.GONE);
             tiaoji_ll.setVisibility(View.GONE);
             tiaojihis_ll.setVisibility(View.GONE);
         } else if (SharedPrefsUtil.getValue(getActivity(), "userInfo", "usertype", "").equals(AGENT_CODE)) {
@@ -292,11 +299,23 @@ public class Workbench extends BaseFragment {
 
 
     /**
+     * 离线出库历史
+     */
+    @OnClick(R.id.lxckls_ll)
+    void OffLineCkls() {
+        startActivity(new Intent(getActivity(), OffLineCkHistory.class));
+    }
+
+    /**
      * 离线出库
      */
     @OnClick(R.id.lxck_ll)
     void OffLineCk() {
-        startActivity(new Intent(getActivity(), OffLineCk.class));
+        if (NetUtils.isConnected(getActivity())) {
+            ShowToast.showShort(getActivity(), "网络正常，请使用在线出库");
+        } else {
+            startActivity(new Intent(getActivity(), OffLineCk.class));
+        }
     }
 
 

@@ -22,7 +22,9 @@
     <string name="dls">代理商</string>
     <string name="lss">零售商</string>
     <string name="fccx">防窜查询</string>
+
     <string name="lxck">离线出库</string>
+    <string name="lxckls">离线出库历史</string>
 
 
     <string name="connect_err">连接失败，请重试</string>
@@ -36,7 +38,6 @@
     <string name="account_pwd_err">帐号或密码错误</string>
     <string name="loading_write">请稍后...</string>
     <string name="loading">加载中...</string>
-
 
 
     <!--出 退 调剂 库历史-->
@@ -63,6 +64,7 @@
 
     <!--出库  退库-->
     <string name="ckrw">出库任务</string>
+    <string name="offline_ckrw">离线出库任务</string>
     <string name="tkrw">退库任务</string>
     <string name="xyb">下一步</string>
     <string name="submit">完成</string>
@@ -70,10 +72,10 @@
     <string name="permission_external_storage">App需要用到读写权限</string>
     <string name="tips_scan_code">将二维码/条形码放入框内，即可自动扫码</string>
     <string name="sm_num">扫码数：</string>
-    <string name="newTask">创建任务中...</string>
+    <string name="newTask">创建任务并上传中...</string>
     <string name="uploading">上传中...</string>
     <string name="barcode_result">当前扫码结果：</string>
-
+    <string name="manual_input">手动输入</string>
 
     <!--代理商，零售商-->
     <string name="bh">编号</string>

@@ -50,10 +50,10 @@
             android:id="@+id/preventflee_ll"
             android:layout_width="0dp"
             android:layout_height="@dimen/qb_px_80"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_marginRight="@dimen/qb_px_10"
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
-            android:layout_marginRight="@dimen/qb_px_10"
-            android:layout_marginLeft="@dimen/qb_px_10"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -183,7 +183,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_10"
         android:gravity="center"
-        android:visibility="gone"
         android:orientation="horizontal">
 
 
@@ -212,23 +211,45 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/qb_px_80"
-            android:layout_marginLeft="@dimen/qb_px_10"
-            android:layout_weight="1"
-            >
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="@dimen/qb_px_80"-->
+        <!--android:layout_marginLeft="@dimen/qb_px_10"-->
+        <!--android:layout_weight="1"-->
+        <!--&gt;-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
         <LinearLayout
-            android:id="@+id/lxck_ll"
+            android:id="@+id/lxckls_ll"
             android:layout_width="0dp"
             android:layout_height="@dimen/qb_px_80"
             android:layout_marginLeft="@dimen/qb_px_10"
             android:layout_marginRight="@dimen/qb_px_10"
             android:layout_weight="1"
             android:background="@color/login_btn_disenable"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/offline_history" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lxckls"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lxck_ll"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@color/orange_normal"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -244,13 +265,14 @@
                 android:textColor="@color/white" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/qb_px_80"
-            android:layout_marginRight="@dimen/qb_px_10"
-            android:layout_weight="1">
 
-        </LinearLayout>
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="@dimen/qb_px_80"-->
+        <!--android:layout_marginRight="@dimen/qb_px_10"-->
+        <!--android:layout_weight="1">-->
+
+        <!--</LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/tiaoji_ll"

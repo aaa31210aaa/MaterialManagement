@@ -162,7 +162,7 @@ public class OutLibraryHistory extends BaseActivity {
 
     private void mConnect(String searchparam) {
         OkGo.<String>get(url)
-                .tag(this)
+                .tag(TAG)
                 .params("loginuserid", SharedPrefsUtil.getValue(this, "userInfo", "userid", ""))
                 .params("loginusertype", SharedPrefsUtil.getValue(this, "userInfo", "usertype", ""))
                 .params("bean.dealersid", dealersid)

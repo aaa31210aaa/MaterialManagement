@@ -136,7 +136,7 @@ public class AgentRetailerDetail extends BaseActivity {
             ShowToast.showShort(this, "请填写正确的电话号码");
         } else {
             OkGo.<String>get(url)
-                    .tag(this)
+                    .tag(TAG)
                     .params("loginuserid", SharedPrefsUtil.getValue(this, "userInfo", "userid", ""))
                     .params(PortIpAddress.Bean + "dealersid", dealersid)
                     .params(PortIpAddress.Bean + "loginname", agent_retailer_etv_yhm.getText().toString())
@@ -235,7 +235,7 @@ public class AgentRetailerDetail extends BaseActivity {
     private void OneInfoDetail() {
         dialog = DialogUtil.createLoadingDialog(AgentRetailerDetail.this, R.string.loading);
         OkGo.<String>get(PortIpAddress.DlsJxsDetail())
-                .tag(this)
+                .tag(TAG)
                 .params("loginuserid", SharedPrefsUtil.getValue(this, "userInfo", "userid", ""))
                 .params("bean.dealersid", dealersid)
                 .execute(new StringCallback() {

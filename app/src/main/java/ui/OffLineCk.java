@@ -52,7 +52,6 @@ import static utile.PortIpAddress.SUCCESS_CODE;
 public class OffLineCk extends BaseActivity {
     @BindView(R.id.title_name)
     TextView title_name;
-    private String tag = "";
     @BindView(R.id.search_edittext)
     EditText search_edittext;
     @BindView(R.id.search_clear)
@@ -64,6 +63,8 @@ public class OffLineCk extends BaseActivity {
     private OutLibraryAdapter adapter;
     private List<OutLibraryHistoryBean> mDatas;
     private List<OutLibraryHistoryBean> searchDatas;
+    private String url = "";
+    private String errStr = "当前没有缓存";
 
 
     @Override
@@ -74,11 +75,17 @@ public class OffLineCk extends BaseActivity {
         initData();
     }
 
+    @OnClick(R.id.back)
+    void Back() {
+        finish();
+    }
+
     @Override
     protected void initData() {
-        title_name.setText("离线出库任务");
+        url = PortIpAddress.DlsJxsList();
+        title_name.setText(R.string.offline_ckrw);
         initRv();
-        mConnect();
+        mConnect(url, search_edittext.getText().toString());
         initRefresh();
         MonitorEditext();
     }
@@ -128,7 +135,7 @@ public class OffLineCk extends BaseActivity {
                     refreshLayout.finishLoadmore();
                     break;
                 case 1:
-                    mConnect();
+                    mConnect(url, search_edittext.getText().toString());
                     break;
                 default:
                     break;
@@ -137,13 +144,14 @@ public class OffLineCk extends BaseActivity {
     };
 
 
-    private void mConnect() {
-        OkGo.<String>get(PortIpAddress.DlsJxsList())
-                .tag(this)
+    private void mConnect(String url, String searchparam) {
+        OkGo.<String>get(url)
+                .tag(TAG)
                 .cacheKey("outlibrary_step_one")
                 .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                 .params("loginuserid", SharedPrefsUtil.getValue(this, "userInfo", "userid", ""))
                 .params("loginusertype", SharedPrefsUtil.getValue(this, "userInfo", "usertype", ""))
+                .params("searchparam", searchparam)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -161,11 +169,6 @@ public class OffLineCk extends BaseActivity {
                                 }
                                 adapter.setNewData(mDatas);
 
-                                //如果无数据设置空布局
-                                if (mDatas.size() == 0) {
-                                    adapter.setEmptyView(R.layout.nodata_layout, (ViewGroup) recyclerView.getParent());
-                                }
-
                             } else {
                                 ShowToast.showShort(OffLineCk.this, err);
                             }
@@ -173,6 +176,17 @@ public class OffLineCk extends BaseActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+                        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                OutLibraryHistoryBean bean = (OutLibraryHistoryBean) adapter.getData().get(position);
+                                Intent intent = new Intent(OffLineCk.this, OfflineCkStepTwo.class);
+                                intent.putExtra("bean.dealersid", bean.getId());
+                                intent.putExtra("bean.dealersname", bean.getJxs());
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                     @Override
@@ -192,39 +206,40 @@ public class OffLineCk extends BaseActivity {
                                 }
                                 adapter.setNewData(mDatas);
 
-                                //如果无数据设置空布局
-                                if (mDatas.size() == 0) {
-                                    adapter.setEmptyView(R.layout.nodata_layout, (ViewGroup) recyclerView.getParent());
-                                }
+
                             } else {
                                 ShowToast.showShort(OffLineCk.this, err);
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                    }
 
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        ShowToast.showShort(OffLineCk.this, R.string.connect_cache);
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
                         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                 OutLibraryHistoryBean bean = (OutLibraryHistoryBean) adapter.getData().get(position);
-                                Intent intent = new Intent(OffLineCk.this, OutLibraryStepTwo.class);
-                                intent.putExtra("tag", tag);
+                                Intent intent = new Intent(OffLineCk.this, OfflineCkStepTwo.class);
                                 intent.putExtra("bean.dealersid", bean.getId());
                                 intent.putExtra("bean.dealersname", bean.getJxs());
                                 startActivity(intent);
                             }
                         });
+                        errStr = "加载缓存数据成功";
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        ShowToast.showShort(OffLineCk.this, errStr);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        //如果无数据设置空布局
+                        if (mDatas.size() == 0) {
+                            adapter.setEmptyView(R.layout.nodata_layout, (ViewGroup) recyclerView.getParent());
+                        }
                         dialog.dismiss();
                         refreshLayout.finishRefresh();
                     }
@@ -253,11 +268,11 @@ public class OffLineCk extends BaseActivity {
                     } else {
                         refreshLayout.setEnableRefresh(true);
                         search_clear.setVisibility(View.GONE);
-//                        if (adapter != null) {
-//                            adapter.setNewData(mDatas);
-//                        }
+                        if (adapter != null) {
+                            adapter.setNewData(mDatas);
+                        }
                     }
-//                    mConnect(search_edittext.getText().toString());
+//                    mConnect(url, search_edittext.getText().toString());
                 } else {
                     if (search_edittext.length() > 0) {
                         search_clear.setVisibility(View.VISIBLE);
@@ -284,6 +299,7 @@ public class OffLineCk extends BaseActivity {
         search_clear.setVisibility(View.GONE);
     }
 
+
     //搜索框
     private void search(String str) {
         if (mDatas != null) {
@@ -300,4 +316,6 @@ public class OffLineCk extends BaseActivity {
             }
         }
     }
+
+
 }

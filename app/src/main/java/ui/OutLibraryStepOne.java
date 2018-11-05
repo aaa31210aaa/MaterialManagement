@@ -157,7 +157,7 @@ public class OutLibraryStepOne extends BaseActivity {
 
     private void mConnect(String url, String searchparam) {
         OkGo.<String>get(url)
-                .tag(this)
+                .tag(TAG)
                 .cacheKey("outlibrary_step_one")
                 .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                 .params("loginuserid", SharedPrefsUtil.getValue(this, "userInfo", "userid", ""))

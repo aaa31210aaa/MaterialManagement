@@ -3,6 +3,8 @@ package bean;
 import java.io.Serializable;
 
 public class OutLibraryHistoryBean implements Serializable {
+    private String userid;
+    private String usertype;
     private String id;
     private String productid;
     private String productname;
@@ -16,6 +18,25 @@ public class OutLibraryHistoryBean implements Serializable {
     private String bz;
     private String cpzl;
     private String xs;
+    private String dealersid;
+    private String dealersName;
+    private String barcodeNum;
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public String getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
+    }
 
     public String getId() {
         return id;
@@ -120,5 +141,29 @@ public class OutLibraryHistoryBean implements Serializable {
 
     public void setXs(String xs) {
         this.xs = xs;
+    }
+
+    public String getDealersid() {
+        return dealersid;
+    }
+
+    public void setDealersid(String dealersid) {
+        this.dealersid = dealersid;
+    }
+
+    public String getDealersName() {
+        return dealersName;
+    }
+
+    public void setDealersName(String dealersName) {
+        this.dealersName = dealersName;
+    }
+
+    public String getBarcodeNum() {
+        return barcodeNum;
+    }
+
+    public void setBarcodeNum(String barcodeNum) {
+        this.barcodeNum = barcodeNum;
     }
 }

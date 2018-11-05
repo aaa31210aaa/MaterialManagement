@@ -1,5 +1,7 @@
 package utile;
 
+import android.content.Context;
+
 public class PortIpAddress {
     public static String SUCCESS_CODE = "true";
     public static String ERR_CODE = "0001";
@@ -9,6 +11,21 @@ public class PortIpAddress {
     public static String TOKEN_KEY = "access_token";
     public static String USERID_KEY = "userid";
     public static String Bean = "bean.";
+
+
+    public static String getUserId(Context context){
+        return SharedPrefsUtil.getValue(context,"userInfo","userid","");
+    }
+
+    public static String getUserToken(Context context){
+        return SharedPrefsUtil.getValue(context,"userInfo","user_token","");
+    }
+
+    public static String getUserType(Context context){
+        return SharedPrefsUtil.getValue(context,"userInfo","usertype","");
+    }
+
+
 
 
     //正式环境

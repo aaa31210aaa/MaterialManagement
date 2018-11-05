@@ -43,7 +43,7 @@ import static utile.PortIpAddress.CODE;
 import static utile.PortIpAddress.MESSAGE;
 import static utile.PortIpAddress.SUCCESS_CODE;
 
-public class OutLibraryStepTwo extends BaseActivity {
+public class OfflineCkStepTwo extends BaseActivity {
     @BindView(R.id.title_name)
     TextView title_name;
     @BindView(R.id.title_name_right)
@@ -58,35 +58,35 @@ public class OutLibraryStepTwo extends BaseActivity {
     TextView dls_lss_tv;
     @BindView(R.id.ckrq_tv)
     TextView ckrq_tv;
-    private String tag = "";
     private String url = "";
     private String dataKey = "";
 
     private int CPCHOOSE_CODE = 10;
     private String cp_name = "";
-    public static Activity instanceStepTwo;
+    public static Activity offlineStepTwo;
 
     private String dealersid = "";
     private String dlslss = "";
     private String cksj = "";
+    private String taskid = "";
+
     private TimePickerView pvTime;
     private Intent intent_data;
-    private String errStr = "连接失败，请检查网络";
-    private boolean isTrue = true;
+    private String errStr = "当前没有缓存";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_out_library_step_two);
+        setContentView(R.layout.activity_offline_ck_step_two);
         ButterKnife.bind(this);
         initData();
     }
 
     @Override
     protected void initData() {
-        instanceStepTwo = this;
+        offlineStepTwo = this;
         Intent intent = getIntent();
-        tag = intent.getStringExtra("tag");
         title_name_right.setText(R.string.xyb);
 
         if (SharedPrefsUtil.getValue(this, "userInfo", "usertype", "").equals(ONE_CODE)) {
@@ -101,22 +101,10 @@ public class OutLibraryStepTwo extends BaseActivity {
         ckrq_tv.setText(DateUtils.dateToStrHour());
         initTimePicker();
 
-        if (tag.equals("ck")) {
-            title_name.setText(R.string.ckrw);
-            cktkrq_tv.setText(R.string.ckrq);
-            url = PortIpAddress.OutLibraryStepTwo();
-            dataKey = "bean.outdate";
-        } else if (tag.equals("tk")) {
-            title_name.setText(R.string.tkrw);
-            cktkrq_tv.setText(R.string.tkrq);
-            url = PortIpAddress.TkStepTwo();
-            dataKey = "bean.refunddate";
-        } else {
-            title_name.setText(R.string.tiaojirw);
-            cktkrq_tv.setText(R.string.tiaojidate);
-            url = PortIpAddress.TiaoJiLibraryStepTwo();
-            dataKey = "bean.taskdate";
-        }
+        title_name.setText(R.string.offline_ckrw);
+        cktkrq_tv.setText(R.string.ckrq);
+        url = PortIpAddress.OutLibraryStepTwo();
+        dataKey = "bean.outdate";
     }
 
     @OnClick(R.id.back)
@@ -124,25 +112,13 @@ public class OutLibraryStepTwo extends BaseActivity {
         finish();
     }
 
-    /**
-     * 下一步
-     */
-    @OnClick(R.id.title_name_right)
-    void NextStep() {
-
-//        Intent intent = new Intent(OutLibraryStepTwo.this, OutLibraryResult.class);
-//        intent.putExtra("tag", tag);
-//        startActivity(intent);
-        mConnect();
-    }
-
-
     @OnClick(R.id.ckrq_tv)
     void Date() {
         if (pvTime != null) {
             pvTime.show();
         }
     }
+
 
     private void initTimePicker() {//Dialog 模式下，在底部弹出
 
@@ -190,8 +166,22 @@ public class OutLibraryStepTwo extends BaseActivity {
     }
 
 
+    /**
+     * 下一步
+     */
+    @OnClick(R.id.title_name_right)
+    void NextStep() {
+
+//        Intent intent = new Intent(OutLibraryStepTwo.this, OutLibraryResult.class);
+//        intent.putExtra("tag", tag);
+//        startActivity(intent);
+        mConnect();
+    }
+
+
     private void mConnect() {
-        dialog = DialogUtil.createLoadingDialog(OutLibraryStepTwo.this, R.string.loading);
+        dialog = DialogUtil.createLoadingDialog(OfflineCkStepTwo.this, R.string.loading);
+        intent_data = new Intent(OfflineCkStepTwo.this, OfflineCkResult.class);
         OkGo.<String>get(url)
                 .tag(TAG)
                 .cacheKey("outlibrary_step_two")
@@ -203,84 +193,60 @@ public class OutLibraryStepTwo extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        isTrue = true;
                         try {
                             String jsonStr = response.body().toString();
                             JSONObject jsonObject = new JSONObject(jsonStr);
                             String err = jsonObject.getString(MESSAGE);
                             if (jsonObject.getString(CODE).equals(SUCCESS_CODE)) {
-                                String taskid = jsonObject.getString("taskid");
-                                intent_data = new Intent(OutLibraryStepTwo.this, OutLibraryResult.class);
-                                intent_data.putExtra("bean.dealersid", dealersid);
-                                intent_data.putExtra("dealersname", dlslss);
-                                intent_data.putExtra("outdate", ckrq_tv.getText().toString());
-                                intent_data.putExtra("tag", tag);
-                                intent_data.putExtra("taskid", taskid);
-                                if (isTrue)
-                                    startActivity(intent_data);
+                                taskid = jsonObject.getString("taskid");
+//                                intent_data.putExtra("bean.dealersid", dealersid);
+//                                intent_data.putExtra("dealersname", dlslss);
+//                                intent_data.putExtra("outdate", ckrq_tv.getText().toString());
+//                                intent_data.putExtra("taskid", taskid);
+//                                startActivity(intent_data);
                             } else {
-                                ShowToast.showShort(OutLibraryStepTwo.this, err);
+                                ShowToast.showShort(OfflineCkStepTwo.this, err);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        errStr = "网络连接失败，请重试";
-
                     }
 
                     @Override
                     public void onCacheSuccess(Response<String> response) {
                         super.onCacheSuccess(response);
-                        isTrue = false;
                         try {
                             String jsonStr = response.body().toString();
                             JSONObject jsonObject = new JSONObject(jsonStr);
                             String err = jsonObject.getString(MESSAGE);
                             if (jsonObject.getString(CODE).equals(SUCCESS_CODE)) {
-                                String taskid = jsonObject.getString("taskid");
-                                intent_data = new Intent(OutLibraryStepTwo.this, OutLibraryResult.class);
-                                intent_data.putExtra("bean.dealersid", dealersid);
-                                intent_data.putExtra("dealersname", dlslss);
-                                intent_data.putExtra("outdate", ckrq_tv.getText().toString());
-                                intent_data.putExtra("tag", tag);
-                                intent_data.putExtra("taskid", taskid);
-                                if (isTrue)
-                                    startActivity(intent_data);
+                                taskid = jsonObject.getString("taskid");
+
                             } else {
-                                ShowToast.showShort(OutLibraryStepTwo.this, err);
+                                ShowToast.showShort(OfflineCkStepTwo.this, err);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        errStr = "";
+                        errStr = "加载缓存数据成功";
 
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        if (isTrue) {
-                            ShowToast.showShort(OutLibraryStepTwo.this, errStr);
-                        }
+                        ShowToast.showShort(OfflineCkStepTwo.this, errStr);
                     }
 
                     @Override
                     public void onFinish() {
                         super.onFinish();
                         dialog.dismiss();
+                        intent_data.putExtra("bean.dealersid", dealersid);
+                        intent_data.putExtra("dealersname", dlslss);
+                        intent_data.putExtra("outdate", ckrq_tv.getText().toString());
+                        startActivity(intent_data);
                     }
                 });
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null) {
-            if (requestCode == CPCHOOSE_CODE) {
-                Bundle bundle = data.getExtras();
-                cp_name = bundle.getString("cp_name");
-            }
-        }
     }
 }

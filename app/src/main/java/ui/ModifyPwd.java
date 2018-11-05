@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import utile.BaseActivity;
+import utile.MD5;
 import utile.PortIpAddress;
 import utile.SharedPrefsUtil;
 import utile.ShowToast;
@@ -202,7 +203,7 @@ public class ModifyPwd extends BaseActivity {
 
     private void mConnect(String oldPwd, String newPwd) {
         OkGo.<String>get(PortIpAddress.updatePwd())
-                .tag(this)
+                .tag(TAG)
                 .params("userid", SharedPrefsUtil.getValue(this, "userInfo", "userid", ""))
                 .params("oldloginpwd", oldPwd)
                 .params("loginpwd", newPwd)
@@ -216,8 +217,9 @@ public class ModifyPwd extends BaseActivity {
                                 ShowToast.showShort(ModifyPwd.this, "修改成功,请重新登陆");
                                 //保存修改后的密码
                                 SharedPrefsUtil.putValue(ModifyPwd.this, "userInfo", "userpwd", etv_newpwd.getText().toString());
+                                SharedPrefsUtil.putValue(ModifyPwd.this, "userInfo", "userpwd_md5", MD5.getMD5(etv_newpwd.getText().toString()));
                                 userOldPwd = SharedPrefsUtil.getValue(ModifyPwd.this, "userInfo", "userpwd", "");
-//                                finish();
+//                              finish();
                                 Intent logoutIntent = new Intent(ModifyPwd.this, Login.class);
                                 logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(logoutIntent);

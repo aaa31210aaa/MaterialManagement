@@ -31,6 +31,8 @@ import utile.AppUtils;
 import utile.BaseActivity;
 import utile.DialogUtil;
 import utile.JsonCallback;
+import utile.MD5;
+import utile.NetUtils;
 import utile.PortIpAddress;
 import utile.SharedPrefsUtil;
 import utile.ShowToast;
@@ -54,7 +56,7 @@ public class Login extends BaseActivity {
     ImageButton login_username_clear;
     @BindView(R.id.login_pwd_hidden)
     CheckBox login_pwd_hidden;
-
+    public static final String logintype = "2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +106,6 @@ public class Login extends BaseActivity {
                 }
             }
         });
-
 
         SaveAccount();
         SavePwd();
@@ -260,51 +261,83 @@ public class Login extends BaseActivity {
      * 调用登陆接口
      */
     private void mConnect() {
-        OkGo.<UserInfo>get(PortIpAddress.Login())
-                .tag(this)
-                .params("loginname", edit_username.getText().toString())
-                .params("loginpwd", edit_password.getText().toString())
-                .execute(new JsonCallback<UserInfo>(UserInfo.class) {
-                    @Override
-                    public void onSuccess(Response<UserInfo> response) {
-                        String tag = response.body().getSuccess();
-                        String erro = response.body().getErrormessage();
-                        String token = response.body().getAccess_token();
-                        String username = response.body().getUsername();
-                        String userid = response.body().getUserid();
-                        String usertype = response.body().getUsertype();
+        if (NetUtils.isConnected(this)) {
+            OkGo.<UserInfo>get(PortIpAddress.Login())
+                    .tag(this)
+                    .params("loginname", edit_username.getText().toString())
+                    .params("loginpwd", edit_password.getText().toString())
+                    .params("logintype", logintype)
+                    .execute(new JsonCallback<UserInfo>(UserInfo.class) {
+                        @Override
+                        public void onSuccess(Response<UserInfo> response) {
+                            String tag = response.body().getSuccess();
+                            String erro = response.body().getErrormessage();
+                            String token = response.body().getAccess_token();
+                            String username = response.body().getUsername();
+                            String userid = response.body().getUserid();
+                            String usertype = response.body().getUsertype();
 
-                        SharedPrefsUtil.putValue(Login.this, "userInfo", "user_token", token);
-                        SharedPrefsUtil.putValue(Login.this, "userInfo", "username", username);
-                        SharedPrefsUtil.putValue(Login.this, "userInfo", "userpwd", edit_password.getText().toString());
-                        SharedPrefsUtil.putValue(Login.this, "userInfo", "userid", userid);
-                        //一级角色为1，销售角色为2，代理商角色为3
-                        SharedPrefsUtil.putValue(Login.this, "userInfo", "usertype", usertype);
 
-                        if (tag.equals(PortIpAddress.SUCCESS_CODE)) {
-                            if (SharedPrefsUtil.getValue(Login.this, "userInfo", "ISCHECK", true)) {
-                                SharedPrefsUtil.putValue(Login.this, "userInfo", "USER_NAME", edit_username.getText().toString());
+                            if (tag.equals(PortIpAddress.SUCCESS_CODE)) {
+                                SharedPrefsUtil.putValue(Login.this, "userInfo", "user_token", token);
+                                SharedPrefsUtil.putValue(Login.this, "userInfo", "username", edit_username.getText().toString());
+                                SharedPrefsUtil.putValue(Login.this, "userInfo", "userpwd", edit_password.getText().toString());
+
+                                //对保存的密码加密
+                                String pwd_md5 = MD5.getMD5(edit_password.getText().toString());
+                                SharedPrefsUtil.putValue(Login.this, "userInfo", "userpwd_md5", pwd_md5);
+
+                                SharedPrefsUtil.putValue(Login.this, "userInfo", "userid", userid);
+                                //一级角色为1，销售角色为2，代理商角色为3
+                                SharedPrefsUtil.putValue(Login.this, "userInfo", "usertype", usertype);
+
+                                if (SharedPrefsUtil.getValue(Login.this, "userInfo", "ISCHECK", true)) {
+                                    SharedPrefsUtil.putValue(Login.this, "userInfo", "USER_NAME", edit_username.getText().toString());
+                                }
+
+                                if (SharedPrefsUtil.getValue(Login.this, "userInfo", "PWDISCHECK", true)) {
+                                    SharedPrefsUtil.putValue(Login.this, "userInfo", "PWD", edit_password.getText().toString());
+                                }
+                                startActivity(new Intent(Login.this, MainActivity.class));
+                                finish();
+                            } else {
+                                ShowToast.showShort(Login.this, erro);
                             }
-
-                            if (SharedPrefsUtil.getValue(Login.this, "userInfo", "PWDISCHECK", true)) {
-                                SharedPrefsUtil.putValue(Login.this, "userInfo", "PWD", edit_password.getText().toString());
-                            }
-                            startActivity(new Intent(Login.this, MainActivity.class));
-                            finish();
-                        } else {
-                            ShowToast.showShort(Login.this, erro);
                         }
-                        dialog.dismiss();
-                    }
 
-                    @Override
-                    public void onError(Response<UserInfo> response) {
-                        super.onError(response);
-                        dialog.dismiss();
-                        ShowToast.showShort(Login.this, R.string.connect_err);
-                    }
-                });
+                        @Override
+                        public void onError(Response<UserInfo> response) {
+                            super.onError(response);
+                            ShowToast.showShort(Login.this, R.string.connect_err);
+                        }
 
+                        @Override
+                        public void onFinish() {
+                            super.onFinish();
+                            dialog.dismiss();
+                        }
+                    });
+        } else {
+            if (!SharedPrefsUtil.getValue(Login.this, "userInfo", "username", "").equals("") && !SharedPrefsUtil.getValue(Login.this, "userInfo", "userpwd", "").equals("")) {
+                if (edit_username.getText().toString().equals(SharedPrefsUtil.getValue(Login.this, "userInfo", "username", ""))
+                        && MD5.getMD5(edit_password.getText().toString()).equals(SharedPrefsUtil.getValue(Login.this, "userInfo", "userpwd_md5", ""))) {
+                    startActivity(new Intent(Login.this, MainActivity.class));
+                    finish();
+                } else {
+                    ShowToast.showShort(this, "帐号或密码错误,请重试");
+                }
+                if (SharedPrefsUtil.getValue(Login.this, "userInfo", "ISCHECK", true)) {
+                    SharedPrefsUtil.putValue(Login.this, "userInfo", "USER_NAME", edit_username.getText().toString());
+                }
+
+                if (SharedPrefsUtil.getValue(Login.this, "userInfo", "PWDISCHECK", true)) {
+                    SharedPrefsUtil.putValue(Login.this, "userInfo", "PWD", edit_password.getText().toString());
+                }
+            } else {
+                ShowToast.showShort(this, "登录失败，请重试");
+            }
+            dialog.dismiss();
+        }
     }
 
 

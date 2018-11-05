@@ -164,7 +164,7 @@ public class AgentRetailer extends BaseActivity {
 
     private void mConnect(String searchparam) {
         OkGo.<String>get(PortIpAddress.DlsJxsList())
-                .tag(this)
+                .tag(TAG)
                 .params("loginuserid", SharedPrefsUtil.getValue(this, "userInfo", "userid", ""))
                 .params("loginusertype", SharedPrefsUtil.getValue(this, "userInfo", "usertype", ""))
                 .params("searchparam", searchparam)
@@ -239,6 +239,7 @@ public class AgentRetailer extends BaseActivity {
     }
 
 
+
     /**
      * 删除一条信息
      */
@@ -250,7 +251,7 @@ public class AgentRetailer extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 OkGo.<String>get(PortIpAddress.DeleteOne())
-                        .tag(this)
+                        .tag(TAG)
                         .params("loginuserid", SharedPrefsUtil.getValue(AgentRetailer.this, "userInfo", "userid", ""))
                         .params(PortIpAddress.Bean + "dealersid", id)
                         .execute(new StringCallback() {

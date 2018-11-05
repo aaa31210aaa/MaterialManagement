@@ -36,7 +36,6 @@ import utile.PermissionUtil;
 import utile.SharedPrefsUtil;
 import utile.ShowToast;
 
-import static com.example.administrator.materialmanagement.MyApplication.sqldb;
 import static utile.PermissionUtil.STORAGE_REQUESTCODE;
 
 /**
@@ -80,7 +79,7 @@ public class Mine extends BaseFragment implements EasyPermissions.PermissionCall
     protected void loadData() {
         back.setVisibility(View.GONE);
         title_name.setText("我的");
-        version_check_tv.setText("当前版本：V" + AppUtils.getVersionName(getActivity()));
+        version_check_tv.setText("测试版本V" + AppUtils.getVersionName(getActivity()));
         mine_name.setText(SharedPrefsUtil.getValue(getActivity(), "userInfo", "username", ""));
         sp = getActivity().getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
         editor = sp.edit();
@@ -208,7 +207,7 @@ public class Mine extends BaseFragment implements EasyPermissions.PermissionCall
             switch (msg.what) {
                 case 0:
                     CacheManager.getInstance().clear();
-                    sqldb.execSQL("delete from out_storage");
+//                    sqldb.execSQL("delete from out_storage");
                     dialog.dismiss();
                     ShowToast.showShort(getActivity(), "清除成功");
                     break;

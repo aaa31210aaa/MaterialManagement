@@ -15,14 +15,13 @@ import java.util.List;
 import adapter.ViewPagerAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 import tabfragment.Mine;
 import tabfragment.Workbench;
 import utile.BaseActivity;
 import utile.CheckVersion;
 import utile.NoScrollViewPager;
+import utile.PermissionSettingPage;
 import utile.PermissionUtil;
 import utile.ShowToast;
 
@@ -33,7 +32,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     NoScrollViewPager main_viewpager;
     @BindView(R.id.main_tablayout)
     TabLayout main_tablayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     /**
      * 检测读写权限
      */
-    @AfterPermissionGranted(PermissionUtil.STORAGE_REQUESTCODE)
+//    @AfterPermissionGranted(PermissionUtil.STORAGE_REQUESTCODE)
     private void checkWritePermissions() {
         String[] perms = {PermissionUtil.WriteFilePermission};
         if (EasyPermissions.hasPermissions(this, perms)) {//有权限
@@ -86,8 +84,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     public void onPermissionsGranted(int requestCode, List<String> list) {
         // Some permissions have been granted
-//        CheckVersion checkVersion = new CheckVersion();
-//        checkVersion.CheckVersions(this, TAG);
+        CheckVersion checkVersion = new CheckVersion();
+        checkVersion.CheckVersions(this, TAG);
     }
 
     /**
@@ -99,11 +97,12 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this)
-                    .setTitle(R.string.permission_title)
-                    .setRationale(R.string.permission_tips)
-                    .build()
-                    .show();
+//            new AppSettingsDialog.Builder(this)
+//                    .setTitle(R.string.permission_title)
+//                    .setRationale(R.string.permission_tips)
+//                    .build()
+//                    .show();
+            PermissionSettingPage.GoToPermissionSetting(this);
         }
     }
 
